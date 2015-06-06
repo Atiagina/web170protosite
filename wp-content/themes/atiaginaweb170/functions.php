@@ -30,4 +30,39 @@ register_sidebar(array(
 //enable featured images and post thumbnails
 
 add_theme_support('post-thumbnails');
-?>
+
+//add post type support
+
+add_post_type_support('page', 'excerpt');
+
+//title function
+
+function get_my_title_tag(){
+
+    global $post; //DO NOT forget it
+    
+    if (is_front_page()){ //the front page 
+        bloginfo('description');
+    
+    }elseif (is_page() || is_single()) { //pages and postings
+    
+    the_title(); //title of the page or posting
+        
+    }else {
+    
+      bloginfo('description');  
+    
+    }
+    
+    if($post->post_parent){ //if there is a parent page
+    
+        echo ' | '; //separator with spaces
+        echo get_the_title($post->post_parent); //title of a parent page
+    }
+    
+    echo ' | '; //separator with spaces
+    bloginfo('name'); //site name
+    echo ' | '; //separator with spaces
+    echo 'Seattle, WA'; //city and state
+
+};
